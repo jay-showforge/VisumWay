@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "agent": {
+    "identity": "Vinci"
+  },
+  "reflex": {
+    "wakes_enabled": false,
+    "budget": {
+      "max_wakes_per_hour": 4,
+      "max_wakes_per_day": 20
+    },
+    "snooze_minutes": 30
+  },
+  "notify": {
+    "channels": [
+      {
+        "type": "desktop"
+      },
+      {
+        "type": "file"
+      },
+      {
+        "type": "ntfy",
+        "url": "https://ntfy.sh/REPLACE-WITH-A-LONG-RANDOM-TOPIC"
+      }
+    ]
+  },
+  "sources": {
+    "process_watch": {
+      "enabled": true,
+      "names": [
+        "Game.exe"
+      ],
+      "interval_s": 5
+    }
+  }
+}

@@ -1,0 +1,41 @@
+name: Build Windows bundle
+on:
+  workflow_dispatch:
+jobs:
+  bundle:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build offline bundle from source
+        run: |
+          python -m pip install "setuptools>=70.2" wheel
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python release/windows/build.py
+      - name: Smoke test the bundle in a fresh environment
+        run: |
+          $zip = Get-Item dist/VisumWay-*-windows-x64.zip
+          Expand-Archive -LiteralPath $zip.FullName -DestinationPath "$env:RUNNER_TEMP/visumway-release"
+          python -m venv "$env:RUNNER_TEMP/visumway-venv"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:VISUMWAY_HOME = "$env:RUNNER_TEMP/visumway-home"
+          $python = "$env:RUNNER_TEMP/visumway-venv/Scripts/python.exe"
+          & "$env:RUNNER_TEMP/visumway-release/Install-VisumWay.ps1" -Python $python
+          & $python -m visumway --version
+      - name: Attest bundle provenance
+        if: ${{ !github.event.repository.private }}
+        uses: actions/attest@v4
+        with:
+          subject-path: dist/VisumWay-*-windows-x64.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: visumway-windows-x64
+          path: dist/VisumWay-*-windows-x64.zip
+          if-no-files-found: error

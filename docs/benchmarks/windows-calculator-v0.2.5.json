@@ -1,0 +1,190 @@
+{
+  "app": "Windows Calculator, Standard mode",
+  "task": "Read seeded display, add 7, verify the display, multiply by 4, verify final display.",
+  "with": "VisumWay v0.2.5 Windows UI Automation result",
+  "without": "Native Codex computer-use screenshots",
+  "same_keyboard_input": true,
+  "trial_order": [
+    [
+      "visumway",
+      "screen"
+    ],
+    [
+      "screen",
+      "visumway"
+    ]
+  ],
+  "timing": "Start of signed-in Codex CLI invocation to final result. Calculator reset and seeding were outside the timer.",
+  "seconds": {
+    "screen": 34.34,
+    "visumway": 23.345
+  },
+  "percentage_time_saved": 32.02,
+  "median_observation_ms": {
+    "screen": 3211.1,
+    "visumway": 81.4
+  },
+  "pilot_excluded": "Different refresh cadence and a refresh error after correct input.",
+  "results": {
+    "two": {
+      "screen": {
+        "seconds": 34.23,
+        "output": {
+          "initial": 387,
+          "after_add": 394,
+          "final": 1576
+        },
+        "observations": [
+          {
+            "tool": "observe",
+            "ms": 3206.0,
+            "native_ms": 3103,
+            "bytes": 26690,
+            "error": false
+          },
+          {
+            "tool": "observe",
+            "ms": 3197.5,
+            "native_ms": 3095.6,
+            "bytes": 27258,
+            "error": false
+          },
+          {
+            "tool": "observe",
+            "ms": 3232.2,
+            "native_ms": 3106.6,
+            "bytes": 27570,
+            "error": false
+          },
+          {
+            "tool": "observe",
+            "ms": 3233.3,
+            "native_ms": 3101.2,
+            "bytes": 27570,
+            "error": false
+          }
+        ]
+      },
+      "visumway": {
+        "seconds": 23.36,
+        "output": {
+          "initial": 387,
+          "after_add": 394,
+          "final": 1576
+        },
+        "observations": [
+          {
+            "tool": "observe",
+            "ms": 83.6,
+            "native_ms": null,
+            "bytes": 15186,
+            "error": false,
+            "display": [
+              "Display is 387"
+            ]
+          },
+          {
+            "tool": "observe",
+            "ms": 71.9,
+            "native_ms": null,
+            "bytes": 15497,
+            "error": false,
+            "display": [
+              "Display is 394"
+            ]
+          },
+          {
+            "tool": "observe",
+            "ms": 82.8,
+            "native_ms": null,
+            "bytes": 15505,
+            "error": false,
+            "display": [
+              "Display is 1,576"
+            ]
+          }
+        ]
+      }
+    },
+    "three": {
+      "screen": {
+        "seconds": 34.45,
+        "output": {
+          "initial": 642,
+          "after_add": 649,
+          "final": 2596
+        },
+        "observations": [
+          {
+            "tool": "observe",
+            "ms": 3217.4,
+            "native_ms": 3104.8,
+            "bytes": 26606,
+            "error": false
+          },
+          {
+            "tool": "observe",
+            "ms": 3196.3,
+            "native_ms": 3098.4,
+            "bytes": 26606,
+            "error": false
+          },
+          {
+            "tool": "observe",
+            "ms": 3216.1,
+            "native_ms": 3109.1,
+            "bytes": 27346,
+            "error": false
+          },
+          {
+            "tool": "observe",
+            "ms": 3205.2,
+            "native_ms": 3106.9,
+            "bytes": 28170,
+            "error": false
+          }
+        ]
+      },
+      "visumway": {
+        "seconds": 23.33,
+        "output": {
+          "initial": 642,
+          "after_add": 649,
+          "final": 2596
+        },
+        "observations": [
+          {
+            "tool": "observe",
+            "ms": 77.3,
+            "native_ms": null,
+            "bytes": 15186,
+            "error": false,
+            "display": [
+              "Display is 642"
+            ]
+          },
+          {
+            "tool": "observe",
+            "ms": 80.0,
+            "native_ms": null,
+            "bytes": 15497,
+            "error": false,
+            "display": [
+              "Display is 649"
+            ]
+          },
+          {
+            "tool": "observe",
+            "ms": 104.2,
+            "native_ms": null,
+            "bytes": 15505,
+            "error": false,
+            "display": [
+              "Display is 2,596"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

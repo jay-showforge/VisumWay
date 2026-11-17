@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "visumway"
+version = "0.2.6"
+description = "Give your AI a body. Keep its brain on demand. Agent-driven computer integration with zero idle inference."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+visumway = "visumway.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

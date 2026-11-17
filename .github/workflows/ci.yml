@@ -1,0 +1,37 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.9", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -W error -m unittest discover -s tests -t .
+        env:
+          PYTHONPATH: src
+      - run: python -m visumway init && python -m visumway verify
+        env:
+          PYTHONPATH: src
+          VISUMWAY_HOME: ${{ runner.temp }}/visumway-home
+      - name: Build and check the Windows visual helper
+        if: runner.os == 'Windows' && matrix.python == '3.13'
+        shell: pwsh
+        run: |
+          ./bridges/windows-visual/build.ps1
+          $helper = './build/windows-visual/windows-visual.exe'
+          $digest = (Get-FileHash -Algorithm SHA256 -LiteralPath $helper).Hash
+          python -m visumway bridge install windows-visual $helper --sha256 $digest
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m visumway bridge remove windows-visual
+        env:
+          PYTHONPATH: src
+          VISUMWAY_HOME: ${{ runner.temp }}/visumway-visual-home

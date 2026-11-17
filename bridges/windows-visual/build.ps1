@@ -14,9 +14,12 @@ $target = switch ($architecture) {
     default { throw "Unsupported Windows architecture: $architecture" }
 }
 $component = if ($target -eq 'arm64') { 'Microsoft.VisualStudio.Component.VC.Tools.ARM64' } else { 'Microsoft.VisualStudio.Component.VC.Tools.x86.x64' }
-$installation = & $vswhere -latest -products '*' -requires $component -property installationPath
+$installation = & $vswhere -latest -products '*' -requires $component -format json | ConvertFrom-Json
 if (-not $installation) { throw "Visual Studio C++ Build Tools for $target were not found." }
-$vcvars = Join-Path $installation 'VC/Auxiliary/Build/vcvarsall.bat'
+$vcvars = Join-Path $installation.installationPath 'VC/Auxiliary/Build/vcvarsall.bat'
+# Visual Studio 18 requires the standard coroutine header for C++/WinRT.
+# Keep C++17 on Visual Studio 17 so it can reproduce the original release helper.
+$cppStandard = if ([version]$installation.installationVersion -ge [version]'18.0') { '/std:c++20' } else { '/std:c++17' }
 # cmd.exe needs literal quotes here, independent of the PowerShell native argument mode.
 $vcvarsProcess = [System.Diagnostics.ProcessStartInfo]::new()
 $vcvarsProcess.FileName = $env:ComSpec
@@ -48,7 +51,7 @@ try {
     Push-Location -LiteralPath $build.FullName
     try {
         $compilerArgs = @(
-            '/nologo', '/std:c++17', '/EHsc', '/W4', '/O2', '/MT', '/DNOMINMAX', '/DWIN32_LEAN_AND_MEAN',
+            '/nologo', $cppStandard, '/EHsc', '/W4', '/O2', '/MT', '/DNOMINMAX', '/DWIN32_LEAN_AND_MEAN',
             "/I$projection", (Join-Path $PSScriptRoot 'capture.cpp'), "/Fe:$binary",
             '/link', '/INCREMENTAL:NO', '/Brepro', 'd3d11.lib', 'dxgi.lib', 'dwmapi.lib', 'windowscodecs.lib',
             'ole32.lib', 'oleaut32.lib', 'user32.lib', 'windowsapp.lib'

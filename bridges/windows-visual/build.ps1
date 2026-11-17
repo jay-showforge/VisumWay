@@ -17,8 +17,20 @@ $component = if ($target -eq 'arm64') { 'Microsoft.VisualStudio.Component.VC.Too
 $installation = & $vswhere -latest -products '*' -requires $component -property installationPath
 if (-not $installation) { throw "Visual Studio C++ Build Tools for $target were not found." }
 $vcvars = Join-Path $installation 'VC/Auxiliary/Build/vcvarsall.bat'
-$environment = & $env:ComSpec /d /s /c ('""{0}" {1} >nul && set"' -f $vcvars, $target)
-if ($LASTEXITCODE -ne 0) { throw "Could not initialize the Visual C++ $target toolchain." }
+# cmd.exe needs literal quotes here, independent of the PowerShell native argument mode.
+$vcvarsProcess = [System.Diagnostics.ProcessStartInfo]::new()
+$vcvarsProcess.FileName = $env:ComSpec
+$vcvarsProcess.Arguments = '/d /s /c ""{0}" {1} >nul && set"' -f $vcvars, $target
+$vcvarsProcess.UseShellExecute = $false
+$vcvarsProcess.RedirectStandardOutput = $true
+$process = [System.Diagnostics.Process]::Start($vcvarsProcess)
+try {
+    $environment = $process.StandardOutput.ReadToEnd() -split '\r?\n'
+    $process.WaitForExit()
+    if ($process.ExitCode -ne 0) { throw "Could not initialize the Visual C++ $target toolchain." }
+} finally {
+    $process.Dispose()
+}
 $originalEnvironment = @{}
 try {
     foreach ($line in $environment) {

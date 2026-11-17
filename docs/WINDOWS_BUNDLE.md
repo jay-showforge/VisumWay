@@ -7,8 +7,10 @@ works offline.
 
 ## Verify the release ZIP
 
-For the tested local build attached to the v0.2.6 release, download
-`SHA256SUMS.txt` from the same release and compare the published hash to:
+Download the [Windows x64 ZIP](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.6/VisumWay-v0.2.6-windows-x64.zip)
+and [SHA256SUMS.txt](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.6/SHA256SUMS.txt).
+The release ZIP was built locally and tested in a fresh environment.
+Compare the published hash to:
 
 ```powershell
 Get-FileHash -Algorithm SHA256 -LiteralPath .\VisumWay-v0.2.6-windows-x64.zip

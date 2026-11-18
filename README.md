@@ -8,7 +8,7 @@ and any compatible local agent can use the same tools through the CLI or MCP.
 
 ![Out of the Screen. A robot takes shape from a monitor's circuits, connected to a keyboard and mouse.](docs/assets/visumway-out-of-the-screen.png)
 
-[Download v0.2.6 for Windows x64](https://github.com/jay-showforge/VisumWay/releases/tag/v0.2.6) · [Agent setup](SETUP.md) · [Platform support](docs/PLATFORM_MATRIX.md)
+[Download v0.2.7 for Windows x64](https://github.com/jay-showforge/VisumWay/releases/tag/v0.2.7) · [Agent setup](SETUP.md) · [Platform support](docs/PLATFORM_MATRIX.md) · [Licensing](#license-and-commercial-integrations)
 
 ## See the result of your own work
 
@@ -109,17 +109,20 @@ show which paths have been exercised.
 
 ## License and commercial integrations
 
-VisumWay is open source under MIT. You can use it on your own computer,
-deploy it across your team, or include it in a commercial product under
-the same terms. Keep the copyright and license notices with redistributed
-copies. [MIT License](LICENSE)
+VisumWay v0.2.7 is source-available under the **Business Source License
+1.1**. Install it for your own use or deploy it internally at work for
+free, including for paid work.
 
-If you want VisumWay built into your agent or desktop product, a paid
-integration agreement can cover implementation, compatibility testing
-on your target operating systems, and ongoing maintenance and support.
-We can agree on scope, pricing, and terms for any custom integration code
-before work starts.
+If you provide VisumWay as a built-in feature of an agent product for
+third parties, you need a commercial license once that product reaches
+**US$50,000 in gross revenue over the preceding 12 months**. The license
+defines how to count subscriptions and sales of product bundles.
+[License and Additional Use Grant](LICENSE)
 
-For an integration inquiry, send a short description of your product,
-target platforms, and what you plan to ship using the public contact
-details on the [maintainer’s GitHub profile](https://github.com/jay-showforge).
+For commercial licensing or help with integration, compatibility
+testing, and support, contact [licensing@tenzorpipe.org](mailto:licensing@tenzorpipe.org).
+Include the product, target platforms, and how VisumWay would be included.
+
+v0.2.7 converts to Apache 2.0 on November 17, 2030, or sooner if the
+four-year limit in the license applies. v0.2.6 was released under MIT.
+[v0.2.6 license](https://github.com/jay-showforge/VisumWay/blob/v0.2.6/LICENSE)

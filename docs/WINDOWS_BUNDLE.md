@@ -1,29 +1,26 @@
 # Windows x64 bundle
 
 The versioned ZIP includes the VisumWay wheel, the Windows Graphics Capture
-helper, a manifest with both SHA-256 hashes, and a PowerShell installer.
+helper, a manifest with both SHA-256 hashes, the license, and a PowerShell installer.
 You need Python 3.9 or newer. Installation uses the wheel in the ZIP and
 works offline.
 
 ## Verify the release ZIP
 
-Download the [Windows x64 ZIP](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.6/VisumWay-v0.2.6-windows-x64.zip)
-and [SHA256SUMS.txt](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.6/SHA256SUMS.txt).
-The release ZIP was built locally and tested in a fresh environment.
+Download the [Windows x64 ZIP](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.7/VisumWay-v0.2.7-windows-x64.zip)
+and [SHA256SUMS.txt](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.7/SHA256SUMS.txt).
+The release ZIP was built by the public GitHub workflow and tested in a
+fresh environment.
 Compare the published hash to:
 
 ```powershell
-Get-FileHash -Algorithm SHA256 -LiteralPath .\VisumWay-v0.2.6-windows-x64.zip
+Get-FileHash -Algorithm SHA256 -LiteralPath .\VisumWay-v0.2.7-windows-x64.zip
 ```
 
-## Verify a workflow artifact
-
-For a bundle produced by the public GitHub build workflow, verify its
-attestation before extracting the ZIP. Substitute the repository you
-trust and the downloaded filename.
+You can also verify its build attestation before extracting the ZIP.
 
 ```powershell
-gh attestation verify .\VisumWay-v0.2.6-windows-x64.zip --repo OWNER/REPO --signer-workflow OWNER/REPO/.github/workflows/windows-bundle.yml
+gh attestation verify .\VisumWay-v0.2.7-windows-x64.zip --repo jay-showforge/VisumWay --signer-workflow jay-showforge/VisumWay/.github/workflows/windows-bundle.yml
 ```
 
 See [GitHub's verification instructions](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations).

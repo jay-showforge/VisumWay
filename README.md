@@ -125,4 +125,3 @@ Include the product, target platforms, and how VisumWay would be included.
 
 v0.2.7 converts to Apache 2.0 on November 17, 2030, or sooner if the
 four-year limit in the license applies. v0.2.6 was released under MIT.
-[v0.2.6 license](https://github.com/jay-showforge/VisumWay/blob/v0.2.6/LICENSE)

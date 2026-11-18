@@ -107,4 +107,19 @@ show which paths have been exercised.
 - [Roadmap](docs/ROADMAP.md) tracks platform parity and new bridges.
 - [Agent development guide](AGENTS.md) covers working on the repository.
 
-[MIT License](LICENSE)
+## License and commercial integrations
+
+VisumWay is open source under MIT. You can use it on your own computer,
+deploy it across your team, or include it in a commercial product under
+the same terms. Keep the copyright and license notices with redistributed
+copies. [MIT License](LICENSE)
+
+If you want VisumWay built into your agent or desktop product, a paid
+integration agreement can cover implementation, compatibility testing
+on your target operating systems, and ongoing maintenance and support.
+We can agree on scope, pricing, and terms for any custom integration code
+before work starts.
+
+For an integration inquiry, send a short description of your product,
+target platforms, and what you plan to ship using the public contact
+details on the [maintainer’s GitHub profile](https://github.com/jay-showforge).

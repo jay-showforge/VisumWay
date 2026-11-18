@@ -3,13 +3,16 @@ import os
 import sys
 import tempfile
 import threading
+import time
 import unittest
+from unittest.mock import patch
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from visumway import config as config_mod
 from visumway import notify, wake
 from visumway.daemon import Daemon
 from visumway.events import Event, EventError, EventLog, drain_inbox, write_event
+from visumway.filelock import exclusive
 from visumway.paths import Home
 from visumway.policy import ReflexEngine, WakeReport
 from visumway.sources import DiskSpace, ProcessWatch
@@ -268,6 +271,28 @@ class DaemonTests(unittest.TestCase):
     def runner(self, home, cfg, report):
         self.calls.append(report)
         return {"ok": True, "agent": "fake", "report": report.to_dict()}
+
+    def test_restart_accepts_a_recent_heartbeat_when_the_os_lock_is_free(self):
+        self.home.heartbeat.write_text(json.dumps({
+            "pid": os.getpid() + 1, "last_tick": time.time(), "stopped": False,
+        }), encoding="utf-8")
+        daemon = Daemon(self.home, self.cfg, runner=self.runner)
+        try:
+            with patch.object(daemon, "tick", side_effect=KeyboardInterrupt):
+                self.assertEqual(daemon.run_forever(), 0)
+            self.assertEqual(self.calls, [])
+        finally:
+            if daemon._worker.is_alive():
+                daemon.stop()
+
+    def test_second_listener_is_rejected_while_the_os_lock_is_held(self):
+        daemon = Daemon(self.home, self.cfg, runner=self.runner)
+        try:
+            with exclusive(self.home.state / "listener.lock", blocking=False):
+                self.assertEqual(daemon.run_forever(), 1)
+            self.assertEqual(self.calls, [])
+        finally:
+            daemon.stop()
 
     def test_idle_makes_no_model_calls(self):
         d = Daemon(self.home, self.cfg, runner=self.runner)

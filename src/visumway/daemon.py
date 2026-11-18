@@ -233,10 +233,8 @@ class Daemon:
             return 1
 
     def _run_locked(self, interval: float) -> int:
-        hb = read_heartbeat(self.home)
-        if daemon_alive(self.home) and hb.get("pid") != os.getpid():
-            print("visumway: a reflex runtime is already running (pid %s)" % hb.get("pid"))
-            return 1
+        # The OS lock is released on exit. A recent heartbeat may belong to
+        # the listener that systemd or Task Scheduler just replaced.
         self.heartbeat()
         try:
             while True:

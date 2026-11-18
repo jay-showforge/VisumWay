@@ -19,7 +19,7 @@ exercise installed services, real events, and visible alerts.
 | --- | --- | --- |
 | Windows | The GitHub-built v0.2.7 x64 ZIP installed in a fresh environment. Earlier live Windows 11 tests exercised UI Automation, buffered window capture, real signed-in Codex wakes, native toasts, and chat resume. | Signed-in Claude Code wake and chat resume. |
 | macOS | The macOS 3.13 runner initialized the core, completed the MCP handshake, and captured a 1024×768 desktop frame through `screencapture`. | Fresh per-user setup, interactive capture permissions and watch, launchd at sign-in, real crash pickup, notifications, and a signed-in wake. |
-| Linux | Hosted core and MCP checks passed. An Ubuntu-on-WSL smoke tested shared setup and a foreground listener with a test event. | Native Linux desktop capture and watch, login startup, journal delivery, notifications, and a signed-in wake. |
+| Linux | Ubuntu 24.04 on WSL2 with Xvfb exercised scrot capture, an MCP sample watch, a real systemd journal crash, a native signed-in Codex wake, Dunst notification actions, and automatic startup after a distribution restart. Uninstall removed the listener and timer. [Evidence and environment](LINUX_VALIDATION.md) | Physical Linux desktop login and reboot, Wayland capture, GNOME/KDE notification behavior, and signed-in Claude Code. |
 
 ## Available backends
 
@@ -32,9 +32,9 @@ exercise installed services, real events, and visible alerts.
 | Notification click | Protocol activation, Investigate/Later | `notify-send --wait` action helper | Optional `terminal-notifier` click-to-open; no buttons yet |
 | On-demand desktop frame | PowerShell GDI | Existing native/screenshot backend | Existing native/screenshot backend |
 | On-demand display or application window | Windows Graphics Capture helper and WARP fallback | Native target selection pending | Native target selection pending |
-| Change-deduplicated active-task watch | Desktop, display or application window. Tested with signed-in Codex. | Desktop where a capture backend is present. Host verification pending. | Desktop subject to screen-recording permission. Host verification pending. |
+| Change-deduplicated active-task watch | Desktop, display or application window. Tested with signed-in Codex. | Whole-desktop sampled watch verified on Ubuntu/WSL2 with Xvfb and scrot. | Desktop subject to screen-recording permission. Host verification pending. |
 | Buffered window feed and direct control reads | Windows Graphics Capture and UI Automation. Live Codex tests passed. | Native bridges for these capabilities pending | Native bridges for these capabilities pending |
-| Optional signed-in wakes | Codex CLI live verified. Claude Code adapter available, with a successful signed-in wake pending. Optional Codex saved-chat route. | CLI adapters available. Signed-in wake pending. | CLI adapters available. Signed-in wake pending. |
+| Optional signed-in wakes | Codex CLI live verified. Claude Code adapter available, with a successful signed-in wake pending. Optional Codex saved-chat route. | Native Codex CLI wake and resume verified on Ubuntu/WSL2. Claude Code pending. | CLI adapters available. Signed-in wake pending. |
 
 ## Verify on each host
 

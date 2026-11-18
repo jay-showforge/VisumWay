@@ -7,20 +7,20 @@ works offline.
 
 ## Verify the release ZIP
 
-Download the [Windows x64 ZIP](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.8/VisumWay-v0.2.8-windows-x64.zip)
-and [SHA256SUMS.txt](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.8/SHA256SUMS.txt).
+Download the [Windows x64 ZIP](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.9/VisumWay-v0.2.9-windows-x64.zip)
+and [SHA256SUMS.txt](https://github.com/jay-showforge/VisumWay/releases/download/v0.2.9/SHA256SUMS.txt).
 The release ZIP was built by the public GitHub workflow and tested in a
 fresh environment.
 Compare the published hash to:
 
 ```powershell
-Get-FileHash -Algorithm SHA256 -LiteralPath .\VisumWay-v0.2.8-windows-x64.zip
+Get-FileHash -Algorithm SHA256 -LiteralPath .\VisumWay-v0.2.9-windows-x64.zip
 ```
 
 You can also verify its build attestation before extracting the ZIP.
 
 ```powershell
-gh attestation verify .\VisumWay-v0.2.8-windows-x64.zip --repo jay-showforge/VisumWay --signer-workflow jay-showforge/VisumWay/.github/workflows/windows-bundle.yml
+gh attestation verify .\VisumWay-v0.2.9-windows-x64.zip --repo jay-showforge/VisumWay --signer-workflow jay-showforge/VisumWay/.github/workflows/windows-bundle.yml
 ```
 
 See [GitHub's verification instructions](https://docs.github.com/en/actions/how-tos/secure-your-work/use-artifact-attestations/use-artifact-attestations).

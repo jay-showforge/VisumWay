@@ -1,0 +1,111 @@
+{
+  "date": "2026-11-18",
+  "release_under_test": "v0.2.8 public source archive, followed by the listener restart fix included in v0.2.9",
+  "environment": {
+    "distribution": "Ubuntu 24.04.3 LTS",
+    "kernel": "6.6.87.2-microsoft-standard-WSL2",
+    "python": "3.12.3",
+    "display": "Xvfb 1280x800 X11",
+    "notifier": "Dunst 1.9.2 over the user D-Bus",
+    "agent": "native Linux Codex CLI 0.147.0",
+    "account": "existing ChatGPT sign-in"
+  },
+  "regression_suite": {
+    "passed": 93,
+    "skipped": 2,
+    "total": 95
+  },
+  "second_agent_reuse": {
+    "configuration_unchanged": true
+  },
+  "visual_and_mcp": {
+    "target": "desktop",
+    "dimensions": "1280x800",
+    "changed_frame_returned": true,
+    "unchanged_frame_skipped": true,
+    "watch_stop": "passed",
+    "watch_expiry": "passed",
+    "second_agent_capture": true,
+    "nonowner_notification": "denied",
+    "owner_tool_count": 13,
+    "shared_tool_count": 12
+  },
+  "real_agent_visual": {
+    "reply": "{\"ticket\":\"689803\",\"status\":\"VERIFIED\",\"operating_system\":\"Linux\",\"capture_backend\":\"scrot\"}",
+    "tool_calls": [
+      {
+        "tool": "host_blueprint",
+        "server": "visumway",
+        "status": "completed"
+      },
+      {
+        "tool": "capture_screen",
+        "server": "visumway",
+        "status": "failed"
+      },
+      {
+        "tool": "capture_screen",
+        "server": "visumway",
+        "status": "completed"
+      }
+    ]
+  },
+  "real_journal_timer": {
+    "matching_events": 1,
+    "native_crash": "systemd user unit terminated by SIGABRT",
+    "deduplicated": true,
+    "event_source": "linux-journal",
+    "timer_delivery_seconds": 67.73
+  },
+  "real_crash_wake": {
+    "seconds_until_notification": 10.03,
+    "agent": "codex",
+    "status": "notified",
+    "resumable": true,
+    "message": "systemd reports that visumway-acceptance-wake.service crashed: its main process aborted with status 6/ABRT."
+  },
+  "native_notification_open": {
+    "native_server_action": "Dunst action menu Open",
+    "incident_marked_opened": true,
+    "same_session": true,
+    "surface": "terminal"
+  },
+  "resumed_conversation_visible": {
+    "saved_crash_reply_visible_in_xterm": true,
+    "normal_workspace_trust_and_update_prompts_handled": true
+  },
+  "listener_restart": {
+    "restart_fix_required": true,
+    "fresh_process_started": true
+  },
+  "idle": {
+    "seconds": 30,
+    "additional_model_wakes": 0,
+    "listener_cpu_seconds": 0.01
+  },
+  "distribution_restart": {
+    "kernel_boot_id_changed": false,
+    "init_start_changed": true,
+    "listener_started_without_manual_launch": true,
+    "event_timer_started": true,
+    "wakes_remained_paused": true
+  },
+  "uninstall": {
+    "home_purged": true,
+    "listener_stopped": true,
+    "service_and_timer_files_removed": true,
+    "timer_disabled": true
+  },
+  "test_cleanup": {
+    "temporary_account_link_removed": true,
+    "test_virtual_environments_removed": true,
+    "x11_test_utilities_left_installed": true
+  },
+  "limitations": [
+    "WSL2 with Xvfb, not a physical Linux desktop or Wayland compositor",
+    "Linux capture covered a sampled whole-desktop watch; direct control reads and the buffered window feed remain Windows features",
+    "The journal timer reads user-visible records and checks periodically",
+    "The agent MCP configuration explicitly supplied the graphical-session environment",
+    "Codex workspace trust and update prompts appeared on the first interactive resume"
+  ]
+}

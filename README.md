@@ -10,7 +10,7 @@ tools through the CLI or MCP.
 
 ![Out of the Screen. A robot takes shape from a monitor's circuits, connected to a keyboard and mouse.](docs/assets/visumway-out-of-the-screen.png)
 
-[Download v0.2.8 for Windows x64](https://github.com/jay-showforge/VisumWay/releases/tag/v0.2.8) · [Agent setup](SETUP.md) · [Platform support](docs/PLATFORM_MATRIX.md) · [Licensing](#license-and-commercial-integrations)
+[Download v0.2.9 for Windows x64](https://github.com/jay-showforge/VisumWay/releases/tag/v0.2.9) · [Agent setup](SETUP.md) · [Platform support](docs/PLATFORM_MATRIX.md) · [Licensing](#license-and-commercial-integrations)
 
 ## See what the agent can verify
 
@@ -109,9 +109,9 @@ macOS, and Linux with Python 3.9 and 3.13.
 | --- | --- |
 | **Windows** | Clean offline install, direct control reads, buffered window capture, and real Codex crash wakes with native alerts and chat resume on Windows 11. |
 | **macOS** | Hosted checks included a real desktop frame via `screencapture` and an MCP handshake. A signed-in desktop session is still needed to validate login startup, crash delivery, and notifications end to end. |
-| **Linux** | Hosted CLI/MCP checks and an isolated shared-setup test under Ubuntu on WSL. The desktop capture, login startup, and signed-in alert flow still need native Linux desktop validation. |
+| **Linux** | Ubuntu 24.04 under WSL2 with Xvfb passed real X11 capture, MCP watch, journal crash detection, a signed-in native Codex wake, Dunst notification actions, distribution restart, and uninstall. Physical-desktop and Wayland validation remain pending. |
 
-[Platform matrix](docs/PLATFORM_MATRIX.md) · [Verification record](docs/VERIFICATION.md)
+[Platform matrix](docs/PLATFORM_MATRIX.md) · [Verification record](docs/VERIFICATION.md) · [Linux test and setup](docs/LINUX_VALIDATION.md)
 
 ## Build with VisumWay
 
@@ -122,7 +122,7 @@ macOS, and Linux with Python 3.9 and 3.13.
 
 ## License and commercial integrations
 
-VisumWay v0.2.8 is source-available under the **Business Source License
+VisumWay v0.2.9 is source-available under the **Business Source License
 1.1**. Install it for your own use or deploy it internally at work for
 free, including for paid work.
 
@@ -136,5 +136,5 @@ For commercial licensing or help with integration, compatibility
 testing, and support, contact [licensing@tenzorpipe.org](mailto:licensing@tenzorpipe.org).
 Include the product, target platforms, and how VisumWay would be included.
 
-v0.2.8 converts to Apache 2.0 on November 17, 2030, or sooner if the
+v0.2.9 converts to Apache 2.0 on November 17, 2030, or sooner if the
 four-year limit in the license applies. v0.2.6 was released under MIT.

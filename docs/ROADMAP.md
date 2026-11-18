@@ -24,9 +24,11 @@ and outcome for each check.
 1. **macOS desktop.** Verify a fresh setup in a signed-in desktop session.
    Exercise capture permissions, an active watch, launchd startup, a native
    DiagnosticReports event, alert delivery, and uninstall.
-2. **Linux desktop.** Confirm capture on X11 or Wayland, login startup,
-   user-journal delivery, desktop alert actions, and uninstall. The existing
-   WSL test covers shared setup and MCP reuse.
+2. **Linux desktop coverage.** Repeat the
+   [Ubuntu/WSL2 X11 acceptance test](LINUX_VALIDATION.md) on a physical
+   Linux desktop and on Wayland. Check GNOME/KDE capture permissions and
+   notification actions. The WSL2 test already exercised native tools,
+   a signed-in wake, distribution restart, and uninstall.
 3. **Agent adapters.** Complete a signed-in Claude Code wake and confirm
    notification click-to-resume. Recheck the Codex CLI and the optional
    saved-chat route when their interfaces change.

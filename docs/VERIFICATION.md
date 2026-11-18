@@ -2,6 +2,41 @@
 
 What has actually been run, where, and what has not. Update this file whenever something is exercised on a real machine. Do not move a line up a level without doing the run.
 
+## November 18, 2026 — Linux X11 acceptance and listener restart fix
+
+- Installed the public v0.2.8 source archive in an Ubuntu 24.04.3
+  virtual environment on WSL2. Native Linux Xvfb, scrot, Dunst,
+  user D-Bus, and systemd provided the desktop and event paths.
+- Real native Codex CLI 0.147.0 reused an existing ChatGPT account
+  sign-in. It called the installed MCP server and read the randomized
+  six-digit ticket and VERIFIED state from the captured image. Its MCP
+  config needed explicit graphical-session environment variables.
+- The whole-desktop sampled watch returned the changed app state,
+  suppressed an unchanged image, and stopped on explicit stop and lease
+  expiry. A second agent could capture the desktop, while its notification
+  call was denied and setup reuse left the config unchanged.
+- A disposable systemd user service really aborted. The installed
+  one-minute journal timer collected its `code=dumped` record without
+  duplicate replay. A second crash woke Codex and delivered its reply in
+  a native Dunst notification about 10 seconds after the trigger.
+- Activating Dunst's Open action launched xterm with the saved Codex
+  session. Normal first-run trust and update prompts were handled, and
+  the original crash reply was visible in the terminal.
+- A systemd restart exposed a recent-heartbeat guard that delayed the
+  replacement after the OS had released its lock. The v0.2.9 fix uses
+  the existing exclusive OS lock. The final regression suite ran 95 tests,
+  with 93 passing and two platform cases skipped on Linux.
+- With the fix installed, a fresh listener started after service restart.
+  A 30-second idle interval produced no additional model wakes.
+  Restarting the Ubuntu distribution started the listener and event timer
+  automatically. This restarted the distribution's init process and
+  retained the shared WSL kernel. Wakes stayed paused.
+- Real uninstall/purge removed the home, service, and journal timer.
+  Temporary virtual environments and the test account link were removed.
+
+[Environment, reproducible steps, and limits](LINUX_VALIDATION.md) ·
+[Recorded results](validation/linux-ubuntu24-wsl2-x11.json)
+
 ## v0.2.7 — Hosted compatibility and Windows bundle
 
 - All six GitHub Actions jobs passed the unit suite and CLI smoke on

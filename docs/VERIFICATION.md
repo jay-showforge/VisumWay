@@ -2,6 +2,24 @@
 
 What has actually been run, where, and what has not. Update this file whenever something is exercised on a real machine. Do not move a line up a level without doing the run.
 
+## v0.2.7 — Hosted compatibility and Windows bundle
+
+- All six GitHub Actions jobs passed the unit suite and CLI smoke on
+  Windows, macOS, and Ubuntu with Python 3.9 and 3.13. The smoke ran
+  `visumway init` and `visumway verify` in a temporary home.
+  [Release CI](https://github.com/jay-showforge/VisumWay/actions/runs/44223145347)
+- The macOS Python 3.13 runner captured a 1024×768 frame via
+  `screencapture` and the MCP server answered. Ubuntu's Python 3.13
+  runner passed the core and MCP checks and reported that its session
+  had no desktop capture backend. Neither job exercised a configured
+  login service or a real signed-in wake.
+- GitHub Actions built and attested the Windows x64 ZIP. The workflow
+  installed it in a fresh environment, and a separate local test installed
+  the same ZIP offline, loaded the native helper, and reported version
+  0.2.7. The Windows 11 live feature tests below list the earlier
+  builds used for the signed-in wake, alert, and capture checks.
+  [Windows bundle workflow](https://github.com/jay-showforge/VisumWay/actions/runs/44223166266)
+
 ## v0.2.6 — Shared setup without a wake adapter
 
 - The same isolated CLI and MCP smoke passed on Windows and Ubuntu under
@@ -11,7 +29,7 @@ What has actually been run, where, and what has not. Update this file whenever s
   read over MCP. No model wakes occurred.
 - The smoke used disposable homes and a foreground listener. It did
   not test native Linux desktop capture, login registration, or live
-  event collectors. macOS setup and capture still need host validation.
+  event collectors. This test did not include macOS.
 
 ## v0.2.5 — Read Windows controls directly
 
@@ -51,7 +69,7 @@ What has actually been run, where, and what has not. Update this file whenever s
   The earlier sampled watch had missed its equivalent middle state.
 - All 86 runnable Windows regression tests passed across the sandboxed
   suite and the localhost notification rerun. Four POSIX-only tests
-  were skipped. The GitHub workflow has yet to run for this build.
+  were skipped. This build was validated locally.
 
 ## November 17, 2026 — v0.2.3 release review
 
@@ -69,8 +87,8 @@ What has actually been run, where, and what has not. Update this file whenever s
   confirmed that modified helper bytes are rejected before execution.
 - The local ZIP uses the reviewed v0.2.1 helper with SHA-256
   `833c3ece43ceea552abc580cf861edbac9cd39f9fc3195df6cebe4a85010dc32`.
-  The GitHub workflow is prepared to compile the helper from source and
-  attest the bundle. It has not run for this candidate.
+  This candidate was built locally. The v0.2.7 workflow above records the
+  later hosted and attested build.
 - The signed-in background wake and click-through evidence below applies
   to v0.2.1. The v0.2.3 review used stand-ins for Codex and Claude Code.
 
@@ -246,7 +264,14 @@ skipped.
 
 ## macOS
 
-Level C throughout. Notifications are basic and have no click actions.
+Hosted macOS CI exercised the unit suite, host discovery, MCP handshake,
+and a real `screencapture` desktop frame. This is evidence for the hosted
+configuration. Interactive capture permissions, the watch lease, launchd
+registration at sign-in, native DiagnosticReports delivery, visible
+notifications, and the signed-in wake flow still need interactive host
+testing. The AppleScript notifier displays text. The optional
+`terminal-notifier` backend provides click-to-open support and remains
+unverified on an interactive Mac.
 
 ## Agent CLIs
 

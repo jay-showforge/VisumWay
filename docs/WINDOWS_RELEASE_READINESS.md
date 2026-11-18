@@ -1,24 +1,19 @@
 # Windows release readiness
 
-The v0.2.5 candidate adds direct Windows accessibility inspection.
-Signed-in Codex read a fixture's ticket and exact control state and
-bounds without an image. See the [verification record](VERIFICATION.md).
+The v0.2.7 Windows x64 bundle passed a clean install in GitHub Actions
+and a separate local offline install. The
+[verification record](VERIFICATION.md#v027--hosted-compatibility-and-windows-bundle)
+links the build and CI results. Follow the
+[Windows install guide](WINDOWS_BUNDLE.md) for the current bundle with the
+native Windows capture and accessibility helper.
 
-The v0.2.4 candidate added a native buffered window watch. The signed-in
-Codex test recovered a brief visual change between model requests. See
-the [verification record](VERIFICATION.md#v024--windows-buffered-watch).
+Earlier live tests verified signed-in Codex wakes, native toasts, and
+click-to-resume on Windows 11. Signed-in Codex also read controls directly
+in v0.2.5 and recovered a brief visual change with buffered capture in
+v0.2.4. The feature tests below and in the verification record identify the
+builds used. A successful signed-in Claude Code wake is still pending.
 
-The v0.2.3 candidate established notification ownership with the installing
-agent. Other agents reuse the same tools. Fresh installs opt in to
-automatic wakes. The [offline x64 bundle](WINDOWS_BUNDLE.md) passed installation
-and native target enumeration. See the [release review](VERIFICATION.md)
-for the checks still pending. The signed-in Windows results below were
-recorded with v0.2.1.
-
-The independent alert build is ready for review as a Windows release
-candidate validated with signed-in Codex.
-
-## Latest Windows retests
+## November 16 live feature retests
 
 | Status | Checks |
 | --- | --- |
@@ -72,7 +67,7 @@ The exact event record IDs and built-helper hash are in [Verification](VERIFICAT
   A signed-in Codex probe and the full installed bridge checks passed.
   The update's regression suite passed 78 tests and skipped four POSIX-only cases.
 
-## Scope of this release review
+## Scope of the live Windows review
 
 - Codex is the live validation agent for this build. The capture, event,
   and notification bridges are shared. Account detection, invocation, and

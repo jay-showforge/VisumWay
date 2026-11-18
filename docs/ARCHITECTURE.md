@@ -22,7 +22,10 @@
         Computer body: OS, GPU, CPU, apps, devices, network
 ```
 
-VisumWay the setup tool (`setup`, `agent probe`, `verify`) produces this arrangement and exits. It is not in the path of any event or tool call afterwards.
+`visumway setup` inspects the host, configures the available connections,
+and exits. The installed listener handles events, and agents start the CLI
+or MCP tools as needed. Those components work independently of the setup
+process.
 
 ## Two directions of traffic
 
@@ -62,9 +65,15 @@ whose label matches the notification assignment can also use
 
 ## Why a file inbox
 
-Any program in any language can be a bridge by writing one small JSON file and renaming it into place. There is no port to secure, no client library, and no protocol version to negotiate. Access control is the filesystem permission on the VisumWay home. Events survive a runtime restart because they are files. The cost is a directory listing per second, which measured at about 0.03% of a core.
+Any program can report an event by writing a small JSON file and renaming
+it into place. The VisumWay home's filesystem permissions control access.
+The files survive a runtime restart. The listener checks the inbox once a
+second. Its idle CPU use measured about 0.03% of one core on a headless
+Linux VM.
 
-It also makes the best kind of bridge trivial: one where the operating system itself is the listener. A Windows scheduled task with an event-log trigger, or a systemd unit, runs `visumway emit` only at the moment something happens and costs nothing the rest of the time.
+The operating system can run the event collector. A Windows event-log
+subscription triggers its scheduled task when a matching record arrives.
+On Linux, a systemd user timer checks the journal periodically.
 
 Windows starts the single reflex runtime at sign-in. A repeating Task
 Scheduler trigger can replace a terminated runtime, and Windows ignores
@@ -72,9 +81,19 @@ that trigger while the task is already running. The recovery path starts
 the listener only. A wake still requires an eligible event and a saved
 budget reservation.
 
-## Why the wake adapter is a command line
+## Wake adapter boundary
 
-Every serious agent runtime has a non-interactive command. Treating the brain as "a command that takes a prompt" makes models interchangeable with one config key and keeps credentials, model choice, and tool permissions where they already live: in the agent host. For models that cannot call tools, `deliver_stdout` forwards the model's reply as its message.
+Each agent adapter defines how to check sign-in, invoke a background turn,
+read its reply, and resume the resulting session. Its command and output
+format live in the adapter settings. The optional Codex saved-chat route
+has a separate App Server bridge. Credentials, model choice, and tool
+permissions stay with the agent host.
+
+A provider update can change its flags, login status format, or session
+interface. Run `visumway agent list` to check what is installed and
+`visumway agent probe` to verify a real turn against that version.
+The shared CLI/MCP tools and event history remain available with wakes
+paused.
 
 ## Incidents: continuity without a running model
 
@@ -93,7 +112,9 @@ permitted login methods before starting headless inference.
 `visumway agent probe` makes one small model call and records the result
 against the adapter's version.
 
-Desktop chat apps are detected so the plan can state that they have no background invocation interface. The command-line agent for the same account is what gets woken.
+Discovery distinguishes a desktop app from its command-line adapter. The
+independent alert route wakes the CLI. The explicitly configured Windows
+Codex saved-chat option uses the app queue described above.
 
 ## Identity without a running model
 

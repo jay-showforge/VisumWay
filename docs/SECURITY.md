@@ -58,7 +58,10 @@ installations retain their wake setting when upgraded.
 
 **The `visumway://` link.** Any program, including a web page, can ask Windows to open such a link. A link can only name an existing incident (a 48-bit random id) and one of open, investigate, later. The worst a forged link with a guessed id can do is open your own agent on your own incident or snooze it. If that surface is unwanted, remove the `desktop` channel and run `visumway uninstall` followed by `visumway setup`.
 
-**Account usage.** Wakes run on the user's subscription sign-in and count against that plan's usage limits. The wake budget bounds this. Check the agent provider's terms for automated use of a personal plan.
+**Account usage.** The bundled Codex and Claude Code wake adapters use the
+user's existing account sign-in. Background turns use the account's plan
+limits, and the wake budget caps invocations. Check the provider's terms
+for automated use of your plan.
 
 **Remote control.** Replying to the agent from a phone (a roadmap item) means remote input can cause actions on the computer. It must not ship without authentication of the sender and a design review.
 

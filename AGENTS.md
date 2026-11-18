@@ -67,47 +67,21 @@ Always use a throwaway `VISUMWAY_HOME` when developing. Never run a real agent a
 
 `docs/VERIFICATION.md` is the record of live tests, stand-ins, and remaining checks. See `docs/PLATFORM_MATRIX.md` for OS coverage.
 
-## Next work, in order
+## Current priorities
 
-The Windows development host uses integrated Intel Iris Xe graphics.
-Use the demonstration in `docs/WINDOWS_DEMO.md` and preserve the software
-rendering fallback.
+Use [the roadmap](docs/ROADMAP.md) for remaining platform, adapter, and
+performance validation. The [verification record](docs/VERIFICATION.md)
+identifies the actual host and release used for each result. Keep hosted
+CI, stand-in checks, and interactive signed-in desktop tests distinct.
 
-### 1. Run the Windows demonstration
-Follow `docs/WINDOWS_DEMO.md` step by step on Windows 11. Fix whatever breaks, in the smallest way that keeps the invariants. Update `docs/VERIFICATION.md` after each step with what really happened.
-*Done when:* steps 1 to 8 match their "Expect" lines, including after a reboot with every AI app closed, and CI is green on all three OSes.
-
-Likely trouble spots, in order of likelihood: toast display through PowerShell 5.1; `cmd /k` quoting when opening the terminal; event provider names and field positions; `schtasks /SC ONEVENT` needing different rights; npm `.cmd` shims for agent CLIs; console windows flashing.
-
-### 2. Confirm both agents
-Run `visumway agent probe` and a real crash test with Claude Code and with Codex. For Codex, confirm the `--json` event names and that `codex resume <id>` opens the headless session. Adjust the adapter and `agents.parse_output`, and add the real output as a test fixture, as was done for Claude Code.
-*Done when:* both are level A in `docs/VERIFICATION.md`.
-
-### 3. Let the woken agent look before it speaks
-Today the shipped adapters let the model reason over the report only. Give it read-only investigation (event history, incident data, relevant logs) through narrowly scoped allowed tools or the VisumWay MCP server, without permission-bypass flags.
-*Done when:* the message mentions something the model found, and an unattended wake still cannot change the system.
-
-### 4. GPU diagnostics
-Discover the installed adapter and driver through the host bridge. Add
-vendor-specific telemetry only where the host supports it.
-
-### 5. Visual bridges
-The Windows helper provides individual display and window frames on demand.
-The common MCP interface can lease a target and deliver changed frames on request.
-See `docs/WINDOWS_VISUAL.md` for installation and `docs/BRIDGE_SPEC.md` section 4
-for the watch protocol and future native streaming work.
-
-### 6. Linux and macOS parity
-Initial Linux user-journal and macOS DiagnosticReports collectors are implemented. Validate real installation and event delivery on each OS; investigate gaps in Linux access to system-wide crashes. macOS click-to-open uses optional terminal-notifier; validate on real macOS.
-
-### 7. Two-way remote conversation
-Reply from a phone. Needs a design note first (relay, sender authentication).
-
-Further items are in `docs/ROADMAP.md`.
+For changes to the Windows bridge, preserve the software rendering fallback
+and follow the relevant steps in [the Windows walkthrough](docs/WINDOWS_DEMO.md).
+Record the agent version and the actual result when making an authorized
+manual wake test. Use stand-ins in the automated suite.
 
 ## Working conventions
 
 - Small commits, one concern each. Run the tests before every commit.
 - When behaviour changes, update the doc that describes it in the same commit.
 - If a requirement here conflicts with what you find on a real machine, say so in the PR rather than working around an invariant.
-- Keep `README.md`'s status table honest. Move a row to "Working" only after it has been exercised on a real host.
+- Update the platform matrix and verification record together when a capability is exercised on a real host.

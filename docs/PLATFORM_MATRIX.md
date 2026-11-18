@@ -7,6 +7,22 @@ MCP access can reuse that installation. Automatic notifications are
 optional and use a wake adapter for the agent that first declared itself
 during setup.
 
+## Validation by environment
+
+The v0.2.7 GitHub Actions jobs ran the unit suite and `visumway init` /
+`visumway verify` on all three platforms with Python 3.9 and 3.13. The
+workflow checks the core in a temporary home. The separate live tests
+exercise installed services, real events, and visible alerts.
+[v0.2.7 CI run](https://github.com/jay-showforge/VisumWay/actions/runs/44223145347)
+
+| Platform | Evidence | Remaining end-to-end checks |
+| --- | --- | --- |
+| Windows | The GitHub-built v0.2.7 x64 ZIP installed in a fresh environment. Earlier live Windows 11 tests exercised UI Automation, buffered window capture, real signed-in Codex wakes, native toasts, and chat resume. | Signed-in Claude Code wake and chat resume. |
+| macOS | The macOS 3.13 runner initialized the core, completed the MCP handshake, and captured a 1024×768 desktop frame through `screencapture`. | Fresh per-user setup, interactive capture permissions and watch, launchd at sign-in, real crash pickup, notifications, and a signed-in wake. |
+| Linux | Hosted core and MCP checks passed. An Ubuntu-on-WSL smoke tested shared setup and a foreground listener with a test event. | Native Linux desktop capture and watch, login startup, journal delivery, notifications, and a signed-in wake. |
+
+## Available backends
+
 | Capability | Windows | Linux | macOS |
 | --- | --- | --- | --- |
 | Host scan, agent-readable plan | Python-native | Python-native | Python-native |
@@ -18,7 +34,7 @@ during setup.
 | On-demand display or application window | Windows Graphics Capture helper and WARP fallback | Native target selection pending | Native target selection pending |
 | Change-deduplicated active-task watch | Desktop, display or application window. Tested with signed-in Codex. | Desktop where a capture backend is present. Host verification pending. | Desktop subject to screen-recording permission. Host verification pending. |
 | Buffered window feed and direct control reads | Windows Graphics Capture and UI Automation. Live Codex tests passed. | Native bridges for these capabilities pending | Native bridges for these capabilities pending |
-| Signed-in model | Claude Code/Codex CLI, needs real probe | Same | Same |
+| Optional signed-in wakes | Codex CLI live verified. Claude Code adapter available, with a successful signed-in wake pending. Optional Codex saved-chat route. | CLI adapters available. Signed-in wake pending. | CLI adapters available. Signed-in wake pending. |
 
 ## Verify on each host
 
@@ -52,6 +68,8 @@ during setup.
   signal. AppleScript notifications can display text but provide no click
   actions. `terminal-notifier` is an optional supported utility for
   click-to-open via a fixed incident ID; it needs permission and host testing.
-- **Every platform:** No existing desktop chat window is used as a wake engine.
-  A signed-in CLI agent is the on-demand brain, its existing-account auth must
-  be verified, and native notification delivery is independent of the chat UI.
+- **Agent adapters:** The independent wake path invokes a signed-in CLI and
+  delivers the reply through the native notifier. The optional Windows
+  Codex saved-chat route queues the report through App Server and uses the
+  ChatGPT app's completion notifications for that chat. The provider-specific
+  wake paths can be checked with `visumway agent probe`.

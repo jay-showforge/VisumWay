@@ -1,5 +1,9 @@
 # VisumWay v0.2.1 — Platform validation handoff
 
+This is the historical v0.2.1 handoff. Use the
+[platform matrix](docs/PLATFORM_MATRIX.md) and
+[verification record](docs/VERIFICATION.md) for current coverage.
+
 This is an incremental continuation of v0.2, **not a rewrite**.
 
 ## What was implemented in this handoff

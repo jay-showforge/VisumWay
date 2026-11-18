@@ -1,43 +1,46 @@
 # Roadmap
 
-Status as of v0.2.1 cross-platform candidate. Ordered task details are in `AGENTS.md`; what has really been run is in `docs/VERIFICATION.md`.
+The [platform matrix](PLATFORM_MATRIX.md) describes the available bridges.
+The [verification record](VERIFICATION.md) records the version, environment,
+and outcome for each check.
 
-| Milestone | What it means | Status |
-| --- | --- | --- |
-| Host Blueprint Engine | Scan the machine, produce a machine-specific plan | Done (Linux tested) |
-| Independent Runtime | Installed components keep working after setup closes | Done; start-at-sign-in unverified |
-| Wake-Up Bridge | A system event invokes an otherwise inactive model | Done with stand-in; real signed-in run pending |
-| Agent availability | Discover installed / signed in / verified, existing account only | Done with stand-ins |
-| Desktop notification bubble | The model's message, native, under the agent's name | Windows written, unrun; Linux tested with stand-in |
-| Interactive bubbles | Click resumes the conversation; Investigate; Later | Done with stand-in |
-| Windows event bridge | Crashes, hangs, display-driver resets, zero idle inference | Verified on Windows 11 with signed-in Codex |
-| AI-Initiated Communication away from the desk | ntfy, webhook | Done one-way |
-| Real Visual Access | Desktop and window streams on demand | Single frame done; leased stream specified |
-| Universal Installation | Same one-sentence setup on different machines and agents | `visumway setup` exists; Native bridges selected by host; Windows first real acceptance target |
+## Available in the desktop agent preview
 
-## v0.3: proven on Windows
-1. `docs/WINDOWS_DEMO.md` passing end to end, including after reboot
-2. Claude Code and Codex both verified with real runs
-3. Read-only investigation before the model speaks
-4. `gpu_status` tool for NVIDIA
+- Host discovery, a machine-specific setup plan, and shared CLI/MCP tools.
+  An installing agent can reserve optional notifications and other agents
+  can reuse the same setup.
+- On Windows, direct reads of accessible app controls, display and window
+  capture, and a bounded buffer of changed window frames during an active
+  watch.
+- Windows event-triggered wakes, independent native alerts, and click to
+  reopen the originating Codex conversation. Prior live tests covered
+  an application crash, a hang, and reboot into the listener.
+- Per-user macOS DiagnosticReports and Linux journal bridges, with native
+  login and alert validation tracked below. Hosted CI runs the unit suite
+  and CLI/MCP smoke checks on all three platforms.
 
-## v0.4: Eyes
-5. Leased visual stream on Windows Graphics Capture, exposed as watch tools
-6. Window-level capture and change detection
+## Next validation
 
-## v0.5: Conversation
-7. Reply from a phone, authenticated, waking the agent with context
-8. Per-agent permissions and routing when several agents share one computer
-9. Opening a desktop chat app on click, if those apps publish a way to do it
+1. **macOS desktop.** Verify a fresh setup in a signed-in desktop session.
+   Exercise capture permissions, an active watch, launchd startup, a native
+   DiagnosticReports event, alert delivery, and uninstall.
+2. **Linux desktop.** Confirm capture on X11 or Wayland, login startup,
+   user-journal delivery, desktop alert actions, and uninstall. The existing
+   WSL test covers shared setup and MCP reuse.
+3. **Agent adapters.** Complete a signed-in Claude Code wake and confirm
+   notification click-to-resume. Recheck the Codex CLI and the optional
+   saved-chat route when their interfaces change.
+4. **Performance.** Repeat the [Calculator pilot](BENCHMARK.md) with at
+   least ten matched pairs. Add tasks in apps with different accessibility
+   coverage before making broader performance claims.
 
 ## Later
-- Validate and expand Linux (journald, coredump, PipeWire) and macOS bridges
-- Application bridges: apps exposing state to authorised agents
-- Local rule editor (the ignore / log / wake switches as a small UI)
-- Self-repair: `visumway verify --repair` re-runs setup for connections that broke after an OS or driver update
-- Wake budget in tokens or cost, not only invocation counts
 
-## Not planned
-- Keeping a model running to watch the screen. It contradicts the core rule.
-- A hosted service or accounts. Everything is local and self-managed.
-- Modifying models or requiring a particular provider.
+- Add native window capture and direct control reads on other desktops where
+  host permissions and APIs allow them.
+- Give woken agents narrowly scoped, read-only access to relevant diagnostics.
+- Expand hardware diagnostics and bridge health checks.
+- Design authenticated replies to off-device notifications.
+
+The local runtime listens while idle. Model calls stay on demand and agent
+actions use the permissions granted by their host.

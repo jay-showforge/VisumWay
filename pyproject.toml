@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "visumway"
-version = "0.2.7"
-description = "Give your AI a body. Keep its brain on demand. Agent-driven computer integration with zero idle inference."
+version = "0.2.8"
+description = "Shared desktop tools for agents to verify their work, with optional event-triggered wakes."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "BUSL-1.1" }
